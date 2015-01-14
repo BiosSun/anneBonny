@@ -1,0 +1,7 @@
+{
+  "name": "anneBonny",
+  "version": "0.0.0",
+  "description": "a date picker for mobile. use angularJS, moment and jQuery.",
+  "devDependencies": {
+  }
+}
