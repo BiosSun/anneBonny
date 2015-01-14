@@ -355,7 +355,7 @@
 
                     $el.attr('readonly', true);
 
-                    $el.on('click', function(event) {
+                    $el.on('mousedown', function(event) {
                         datePicker.setValue(ngModel.$modelValue).reset({
                             type: type,
                             events: {
