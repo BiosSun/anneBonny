@@ -339,14 +339,25 @@
     }
 
     /**
-     * Angular 的指令
+     * Angular
      */
     angular.module('anneBonny', [])
-        .directive('annebonnyDatePicker', function() {
+        .constant('annebonnyConfig', {
+            /**
+             * 是否禁用 AnneBonny
+             *
+             * 如果需要在某个设备平台中使用原生交互，而在另外一些原生交互体验不好的平台中使用 AnneBonny，
+             * 那么可以使用这个配置。
+             */
+            disabled: false
+        })
+        .directive('annebonnyDatePicker', function(annebonnyConfig) {
             return {
                 restrict: 'A',
                 require: 'ngModel',
                 link: function($scope, $el, $attrs, ngModel) {
+                    if (annebonnyConfig.disabled) return;
+
                     var type = $el.attr('type') || 'date';
 
                     if (type === 'text') {
