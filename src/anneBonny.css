@@ -10,7 +10,8 @@
   text-align: center;
   line-height: 40px;
   border-left: 1px solid #ddd;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  pointer-events: auto; }
   .annebonny-container-calendar > .hd .col:first-child, .annebonny-calendar-page .col:first-child {
     border-left: 0; }
 

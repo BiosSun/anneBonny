@@ -12,6 +12,7 @@ $annebonny-col-width: 14.2857143%;
     line-height: 40px;
     border-left: 1px solid #ddd;
     box-sizing: border-box;
+    pointer-events: auto;
 
     &:first-child {
         border-left: 0;
