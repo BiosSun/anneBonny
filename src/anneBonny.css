@@ -60,7 +60,8 @@
   color: #d0d0d0; }
 .annebonny-calendar-page .day.now {
   color: #428bca;
-  font-weight: 700; }
+  font-weight: 700;
+  text-decoration: underline; }
 .annebonny-calendar-page .day.selected {
   background: #428bca;
   color: #fff; }

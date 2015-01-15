@@ -83,6 +83,7 @@ $annebonny-col-width: 14.2857143%;
         &.now {
             color: $primary-color;
             font-weight: 700;
+            text-decoration: underline;
         }
 
         &.selected {

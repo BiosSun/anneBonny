@@ -236,7 +236,7 @@
                 monthLength     = moment(mdate).endOf('month').date(),
                 prevMonthLength = moment(mdate).subtract(1, 'month').endOf('month').date(),
                 monthFirstDay   = moment(mdate).startOf('month').day(),
-                nowDay = mdate.date(),
+                nowDay          = moment().date(),
 
                 page = $('<div class="' + CLASS_NAME + '-calendar-page"></div>'),
                 pageHd = $('<div class="hd"></div>').appendTo(page),
