@@ -3,7 +3,23 @@
 
         CLASS_NAME = 'annebonny',
         INNER_CLASS_NAME = CLASS_NAME + '-inner',
-        CONTAINER_CLASS_NAME = CLASS_NAME + '-container';
+        CONTAINER_CLASS_NAME = CLASS_NAME + '-container',
+
+        changeMomentKey = {
+            quarter: ['year'],
+            month: ['year'],
+            isoWeek: ['year'],
+            week: ['year'],
+            dayOfYear: ['year'],
+            isoWeekday: ['year', 'isoWeek'],
+            weekday: ['year', 'week'],
+            day: ['year', 'week'],
+            date: ['year', 'month'],
+            hour: ['year', 'month', 'date'],
+            minute: ['year', 'month', 'date', 'hour'],
+            second: ['year', 'month', 'date', 'hour', 'minute'],
+            millisecond: ['year', 'month', 'date', 'hour', 'minute', 'second']
+        };
 
     function DatePicker() {
     }
@@ -47,10 +63,23 @@
         /**
          * 修改当前日期
          */
-        _changeValue: function(key, number) {
-            this._mdate.set(key, number);
+        _changeValue: function(key, change) {
+            if (moment.isMoment(change)) {
+                var front = changeMomentKey[key];
 
-            this.trigger('change', key, number);
+                if (front) {
+                    for (var i = 0; i < front.length; i++) {
+                        this._mdate.set(front[i], change.get(front[i]));
+                    }
+
+                    this._mdate.set(key, change.get(key));
+                }
+            }
+            else {
+                this._mdate.set(key, change);
+            }
+
+            this.trigger('change', key, change);
 
             if (moment.normalizeUnits(key) === 'date') {
                 this.close();
@@ -137,10 +166,10 @@
             var type = options.type;
 
             switch (type) {
-                case 'date' :
-                    return this._createCalendarContainer();
-                default:
-                    return $('<div class="' + CONTAINER_CLASS_NAME + '-unsupported' + '">不支持的日期类型</div>');
+            case 'date' :
+                return this._createCalendarContainer();
+            default:
+                return $('<div class="' + CONTAINER_CLASS_NAME + '-unsupported' + '">不支持的日期类型</div>');
             }
         },
 
@@ -226,17 +255,22 @@
         },
 
         /**
+         * 获取所传入日期所在月份的月历中每天的 moment 对象
+         */
+        _getCalendarMdates: function(mdate) {
+        },
+
+        /**
          * 创建一张日历
          */
         _createCalendarPage: function(mdate) {
-            mdate = moment(mdate);
+            mdate = moment(mdate).startOf('day');
 
             var self = this,
 
-                monthLength     = moment(mdate).endOf('month').date(),
-                prevMonthLength = moment(mdate).subtract(1, 'month').endOf('month').date(),
-                monthFirstDay   = moment(mdate).startOf('month').day(),
-                nowDay          = moment().date(),
+                calendar = new Calendar(mdate),
+                now = moment().startOf('day'),
+                currentMdate = moment(this._mdate).startOf('day'),
 
                 page = $('<div class="' + CLASS_NAME + '-calendar-page"></div>'),
                 pageHd = $('<div class="hd"></div>').appendTo(page),
@@ -249,41 +283,44 @@
 
             pageHd.append(this._createWeekBar());
 
-            daysHtml += '<div class="line">';
+            for (i = 0, l = calendar.mdates.length; i < l; i++) {
+                var date = calendar.mdates[i];
 
-            for (i = prevMonthLength - monthFirstDay + 1; i <= prevMonthLength; i++) {
-                daysHtml += col(i, 'prev-month');
-            }
+                if (i % 7 === 0) {
+                    daysHtml += '<div class="line">';
+                }
 
-            for (i = 1; i <= monthLength; i++) {
-                daysHtml += col(i, (i === nowDay ? 'now' : '') + ' ' + (i === mdate.date() ? 'selected' : ''));
-            }
+                var className = '';
 
-            l = (7 - (monthFirstDay + monthLength) % 7) % 7;
-            for (i = 1; i <= l; i++) {
-                daysHtml += col(i, 'next-month');
+                if (date.diff(now) === 0) { className += 'now '; }
+
+                if (date.diff(currentMdate) === 0) {
+                    className += 'selected ';
+                }
+
+                if (date.month() < this._mdate.month()) { className += 'prev-month '; }
+                if (date.month() > this._mdate.month()) { className += 'next-month '; }
+
+                daysHtml += '<span data-date="' + date.format('YYYY-MM-DD') + '" class="col day ' + className + '">' + date.date() + '</span>';
+
+                if (i % 7 === 6) {
+                    daysHtml += '</div>';
+                }
             }
 
             pageBd.append(daysHtml);
 
             // 绑定点击事件
             pageBd.on('click', '.day', function() {
-                console.info('date');
-                var dayCol = $(this);
-                self._picker.triggerHandler( 'change.annebonny', ['date', parseInt(dayCol.text(), 10)]);
+                var dayCol = $(this),
+                    mdate = moment(dayCol.data('date'));
+
+                self._picker.triggerHandler( 'change.annebonny', ['date', mdate]);
                 dayCol.closest('.bd').find('.day.selected').removeClass('selected');
                 dayCol.addClass('selected');
             });
 
             return page;
-
-            function col(dayNumber, className) {
-                var col = '<span class="col day ' + className + '">' + dayNumber + '</span>';
-                if (++daysCount % 7 === 0) {
-                    col += '</div><div class="line">';
-                }
-                return col;
-            }
         },
 
         /**
@@ -319,6 +356,41 @@
             return mdate && mdate.isValid() ? mdate : undefined;
         }
     };
+
+    function Calendar(mdate) {
+        mdate = moment(mdate).startOf('day');
+
+        var prevMonthLastDate = moment(mdate).subtract(1, 'month').endOf('month').startOf('day'),    // 上一月的最后一天
+            monthLastDate = moment(mdate).endOf('month').startOf('day');
+
+        this._mdate = mdate,
+
+        // 当前月历中所有 date 的数据
+        this.mdates = [];
+        // 当月长度
+        this.monthLength = monthLastDate.date();
+        // 上一月长度
+        this.prevMonthLength = prevMonthLastDate.date();
+        // 当月第一天为周几
+        this.monthFirstDay = moment(mdate).startOf('month').day();
+        // 今天的 date
+        this.nowDay = moment().date();
+        // 显示上一个月中的多少天
+        this.prevMonthDateNumber = this.monthFirstDay;
+        // 当前所显示月历的总星期数
+        this.weekNumber = Math.ceil((this.prevMonthDateNumber + this.monthLength) / 7);
+        // 当前所显示月历的总天数
+        this.dateNumber = this.weekNumber * 7;
+        // 显示下一个月中的多少天
+        this.nextMonthDateNumber = this.dateNumber - this.prevMonthDateNumber - this.monthLength;
+
+
+        var day = prevMonthLastDate.subtract(this.prevMonthDateNumber, 'day');
+
+        for (var i = 0; i < this.dateNumber; i++) {
+            this.mdates.push(moment(day.add(1, 'day')));
+        }
+    }
 
     var datePicker = new DatePicker();
 
@@ -370,10 +442,10 @@
                         datePicker.setValue(ngModel.$modelValue).reset({
                             type: type,
                             events: {
-                                change: function(anneBonny, key, number) {
-                                        ngModel.$setViewValue(anneBonny.getValue().format('YYYY-MM-DD'));
-                                        ngModel.$commitViewValue();
-                                        ngModel.$render();
+                                change: function(anneBonny) {
+                                    ngModel.$setViewValue(anneBonny.getValue().format('YYYY-MM-DD'));
+                                    ngModel.$commitViewValue();
+                                    ngModel.$render();
                                 }
                             }
                         }).open();
