@@ -423,7 +423,7 @@
              */
             disabled: false
         })
-        .directive('annebonnyDatePicker', function(annebonnyConfig) {
+        .directive('annebonnyDatePicker', ['annebonnyConfig', function(annebonnyConfig) {
             return {
                 restrict: 'A',
                 require: 'ngModel',
@@ -453,6 +453,6 @@
                     });
                 }
             };
-        });
+        }]);
 
 })(angular, jQuery, moment);
