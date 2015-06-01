@@ -1,6 +1,6 @@
 {
   "name": "anne-bonny",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "a date picker for mobile. use angularJS, moment and jQuery.",
   "devDependencies": {
     "gulp": "^3.8.10",
