@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Document</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <link href="../src/anneBonny.css" rel="stylesheet"/>
+        <link href="resources/styles/demo.css" rel="stylesheet"/>
+
+        <script src="../libs/angularjs/angular.js"></script>
+        <script src="../libs/jquery/dist/jquery.js"></script>
+        <script src="../libs/moment/moment.js"></script>
+        <script src="../libs/moment/locale/zh-cn.js"></script>
+        <script src="../src/anneBonny.js"></script>
+        <script tyle="text/javascript">
+         moment.locale('zh-cn');
+
+         angular.module('demo', ['anneBonny'])
+             .controller('demoCtrl', function($scope) {
+                 $scope.data = {
+                     und1: undefined,
+                     und2: '2013-12-11',
+                     text1: undefined,
+                     text2: '2013-12-11',
+                     date1: undefined,
+                     date2: new Date(2013, 11, 11),
+                     datetime1: undefined,
+                     datetime2: new Date(2013, 11, 11, 11, 11),
+                     datetimeLocal1: undefined,
+                     datetimeLocal2: new Date(2013, 11, 11, 11, 11),
+                     month1: undefined,
+                     month2: new Date(2013, 11),
+                     week1: undefined,
+                     week2: new Date(2013, 11, 11, 11, 11),
+                     time1: undefined,
+                     time2: new Date(2013, 11, 11, 11, 11)
+                 };
+             });
+        </script>
+    </head>
+    <body ng-app="demo" ng-controller="demoCtrl">
+        <div class="row" title="undefined">
+            <input name="" ng-model="und1" annebonny-date-picker /><br />
+            <input name="" ng-model="und2" annebonny-date-picker />
+        </div>
+        <div class="row" title="text">
+            <input name="" type="text" ng-model="data.text1" annebonny-date-picker /><br />
+            <input name="" type="text" ng-model="data.text2" annebonny-date-picker />
+        </div>
+        <div class="row" title="date">
+            <input name="" type="date" ng-model="data.date1" annebonny-date-picker /><br />
+            <input name="" type="date" ng-model="data.date2" annebonny-date-picker />
+        </div>
+        <div class="row" title="datetime">
+            <input name="" type="datetime" ng-model="data.datetime1" annebonny-date-picker /><br />
+            <input name="" type="datetime" ng-model="data.datetime2" annebonny-date-picker />
+        </div>
+        <div class="row" title="datetime-local">
+            <input name="" type="datetime-local" ng-model="data.datetimeLocal1" annebonny-date-picker /><br />
+            <input name="" type="datetime-local" ng-model="data.datetimeLocal2" annebonny-date-picker />
+        </div>
+        <div class="row" title="month">
+            <input name="" type="month" ng-model="data.month1" annebonny-date-picker /><br />
+            <input name="" type="month" ng-model="data.month2" annebonny-date-picker />
+        </div>
+        <div class="row" title="week">
+            <input name="" type="week" ng-model="data.week1" annebonny-date-picker /><br />
+            <input name="" type="week" ng-model="data.week2" annebonny-date-picker />
+        </div>
+        <div class="row" title="time">
+            <input name="" type="time" ng-model="data.time1" annebonny-date-picker /><br />
+            <input name="" type="time" ng-model="data.time2" annebonny-date-picker />
+        </div>
+    </body>
+</html>

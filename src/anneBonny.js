@@ -392,7 +392,7 @@
         }
     }
 
-    var datePicker = new DatePicker();
+    var datePicker = window.anneBonny = new DatePicker();
 
     function isString(obj) {
         return typeof obj === 'string';
@@ -413,46 +413,48 @@
     /**
      * Angular
      */
-    angular.module('anneBonny', [])
-        .constant('annebonnyConfig', {
-            /**
-             * 是否禁用 AnneBonny
-             *
-             * 如果需要在某个设备平台中使用原生交互，而在另外一些原生交互体验不好的平台中使用 AnneBonny，
-             * 那么可以使用这个配置。
-             */
-            disabled: false
-        })
-        .directive('annebonnyDatePicker', ['annebonnyConfig', function(annebonnyConfig) {
-            return {
-                restrict: 'A',
-                require: 'ngModel',
-                link: function($scope, $el, $attrs, ngModel) {
-                    if (annebonnyConfig.disabled) return;
+    if (angular) {
+        angular.module('anneBonny', [])
+            .constant('annebonnyConfig', {
+                /**
+                 * 是否禁用 AnneBonny
+                 *
+                 * 如果需要在某个设备平台中使用原生交互，而在另外一些原生交互体验不好的平台中使用 AnneBonny，
+                 * 那么可以使用这个配置。
+                 */
+                disabled: false
+            })
+            .directive('annebonnyDatePicker', ['annebonnyConfig', function(annebonnyConfig) {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function($scope, $el, $attrs, ngModel) {
+                        if (annebonnyConfig.disabled) return;
 
-                    var type = $el.attr('type') || 'date';
+                        var type = $el.attr('type') || 'date';
 
-                    if (type === 'text') {
-                        type = 'date';
-                    }
+                        if (type === 'text') {
+                            type = 'date';
+                        }
 
-                    $el.attr('readonly', true);
+                        $el.attr('readonly', true);
 
-                    $el.on('mousedown', function(event) {
-                        datePicker.setValue(ngModel.$modelValue).reset({
-                            type: type,
-                            events: {
-                                change: function(anneBonny) {
-                                    ngModel.$setViewValue(anneBonny.getValue().format('YYYY-MM-DD'));
-                                    ngModel.$commitViewValue();
-                                    ngModel.$render();
+                        $el.on('mousedown', function(event) {
+                            datePicker.setValue(ngModel.$modelValue).reset({
+                                type: type,
+                                events: {
+                                    change: function(anneBonny) {
+                                        ngModel.$setViewValue(anneBonny.getValue().format('YYYY-MM-DD'));
+                                        ngModel.$commitViewValue();
+                                        ngModel.$render();
+                                    }
                                 }
-                            }
-                        }).open();
-                        event.preventDefault();
-                    });
-                }
-            };
-        }]);
+                            }).open();
+                            event.preventDefault();
+                        });
+                    }
+                };
+            }]);
+    }
 
-})(angular, jQuery, moment);
+})(window.angular, window.jQuery, window.moment);
