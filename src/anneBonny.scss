@@ -4,36 +4,38 @@
 @import "../libs/nojiko/sass/settings";
 
 $annebonny-col-width: 14.2857143%;
+$annebonny-panel-zindex: 10002;
+$annebonny-shade-zindex: 10001;
 
 %annebonny-col {
     float: left;
     width: $annebonny-col-width;
     text-align: center;
     line-height: 40px;
-    border-left: 1px solid #ddd;
+    // border-left: 1px solid #ddd;
     box-sizing: border-box;
     pointer-events: auto;
 
     &:first-child {
-        border-left: 0;
+        // border-left: 0;
     }
 }
 
-.annebonny {
-    background: #fff;
-    box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
-}
+.annebonny {}
 
 .annebonny-panel {
-    @include position(fixed, false 0 0, 999);
     max-height: 100%;
+    @include position(fixed, false 0 0, 999);
+
+    background: #fff;
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.35);
 }
 
 .annebonny-container-calendar {
     > .hd {
         @include clearfix;
         background: #f0f0f0;
-        border-top: 1px solid $line-color;
+        // border-top: 1px solid $line-color;
 
         .col {
             @extend %annebonny-col;
@@ -66,7 +68,7 @@ $annebonny-col-width: 14.2857143%;
 
 .annebonny-calendar-page {
     .line {
-        border-bottom: 1px solid #ddd;
+        // border-bottom: 1px solid #ddd;
         @include clearfix;
     }
 
@@ -93,17 +95,22 @@ $annebonny-col-width: 14.2857143%;
     }
 
     > .hd {
-        border-top: 1px solid $line-color;
-        border-bottom: 1px solid $line-color;
+        // border-top: 1px solid $line-color;
+        // border-bottom: 1px solid $line-color;
+        background-color: #F7F7F7;
     }
 
     > .bd {
         .line, .col {
-            border-color: $line-color;
+            // border-color: $line-color;
         }
     }
 }
 
 .annebonny-week-bar {
     @include clearfix;
+}
+
+.annebonny-shade {
+    @include position(fixed, false 0 0, 999);
 }

@@ -9,28 +9,22 @@
   width: 14.28571%;
   text-align: center;
   line-height: 40px;
-  border-left: 1px solid #ddd;
   box-sizing: border-box;
   pointer-events: auto; }
-  .annebonny-container-calendar > .hd .col:first-child, .annebonny-calendar-page .col:first-child {
-    border-left: 0; }
-
-.annebonny {
-  background: #fff;
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1); }
 
 .annebonny-panel {
+  max-height: 100%;
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 999;
-  max-height: 100%; }
+  background: #fff;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.35); }
 
 .annebonny-container-calendar > .hd {
   *zoom: 1;
-  background: #f0f0f0;
-  border-top: 1px solid #d7d7d7; }
+  background: #f0f0f0; }
   .annebonny-container-calendar > .hd:before, .annebonny-container-calendar > .hd:after {
     content: " ";
     display: table; }
@@ -49,7 +43,6 @@
     width: 42.85714%; }
 
 .annebonny-calendar-page .line {
-  border-bottom: 1px solid #ddd;
   *zoom: 1; }
   .annebonny-calendar-page .line:before, .annebonny-calendar-page .line:after {
     content: " ";
@@ -66,10 +59,7 @@
   background: #428bca;
   color: #fff; }
 .annebonny-calendar-page > .hd {
-  border-top: 1px solid #d7d7d7;
-  border-bottom: 1px solid #d7d7d7; }
-.annebonny-calendar-page > .bd .line, .annebonny-calendar-page > .bd .col {
-  border-color: #d7d7d7; }
+  background-color: #F7F7F7; }
 
 .annebonny-week-bar {
   *zoom: 1; }
@@ -78,5 +68,12 @@
     display: table; }
   .annebonny-week-bar:after {
     clear: both; }
+
+.annebonny-shade {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999; }
 
 /*# sourceMappingURL=anneBonny.css.map */
