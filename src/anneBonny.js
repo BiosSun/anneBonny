@@ -118,14 +118,23 @@
                 this._createPicker();
             }
 
-            this._picker.show();
+            if (!this._shade) {
+                this._createShade();
+            }
+
+            this._shade.show();
+            this._picker.slideDown(200);
         },
 
         /**
          * 关闭选择面板
          */
         close: function() {
-            this._picker.hide();
+            var self = this;
+            setTimeout(function() {
+                self._picker.slideUp(200);
+                self._shade.hide();
+            }, 60);
         },
 
         /**
@@ -146,6 +155,23 @@
 
             this._picker = picker;
             this._pickerInner = pickerInner;
+        },
+
+        /**
+         * 创建遮罩
+         */
+        _createShade: function() {
+            var self = this,
+                shade = $('<div class="' + CLASS_NAME + '-shade"></div>');
+
+            shade.hide();
+            shade.appendTo($('body'));
+
+            shade.on('click.annebonny', function(event) {
+                self.close();
+            });
+
+            this._shade = shade;
         },
 
         /**
