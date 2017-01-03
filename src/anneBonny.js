@@ -379,7 +379,7 @@
         // 显示上一个月中的多少天
         this.prevMonthDateNumber = this.monthFirstDay;
         // 当前所显示月历的总星期数
-        this.weekNumber = Math.ceil((this.prevMonthDateNumber + this.monthLength) / 7);
+        this.weekNumber = 6;
         // 当前所显示月历的总天数
         this.dateNumber = this.weekNumber * 7;
         // 显示下一个月中的多少天
