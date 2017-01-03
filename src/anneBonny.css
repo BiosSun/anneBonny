@@ -3,7 +3,9 @@
   width: 14.28571%;
   text-align: center;
   line-height: 40px;
-  box-sizing: border-box;
+  box-sizing: border-box; }
+
+.annebonny {
   pointer-events: auto; }
 
 .annebonny-panel {

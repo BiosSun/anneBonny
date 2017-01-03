@@ -44,10 +44,11 @@ $annebonny-col-width: 14.2857143%;
     text-align: center;
     line-height: 40px;
     box-sizing: border-box;
-    pointer-events: auto;
 }
 
-.annebonny {}
+.annebonny {
+    pointer-events: auto;
+}
 
 .annebonny-panel {
     max-height: 100%;
