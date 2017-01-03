@@ -206,17 +206,21 @@
             var self = this,
 
                 calendar = $('<div class="' + CONTAINER_CLASS_NAME + '-calendar' + '"></div>'),
-                hd = this._createCalendarHeader(),
+                hd = this._createCalendarHeader(this._mdate),
                 bd = this._createCalendarPage(this._mdate);
 
-            calendar.append(hd).append(bd);
+            calendar.append(hd, bd);
 
             this._picker.on('change.annebonny', function(event, key, number) {
                 key = moment.normalizeUnits(key);
                 if (key === 'year' || key == 'month') {
+                    hd.remove();
+                    hd = self._createCalendarHeader(self._mdate);
+
                     bd.remove();
                     bd = self._createCalendarPage(self._mdate);
-                    calendar.append(bd);
+
+                    calendar.append(hd, bd);
                 }
             });
 
@@ -226,64 +230,35 @@
         /**
          * 创建日历容器头部
          */
-        _createCalendarHeader: function() {
-            var hd = $('<div class="hd"></div>');
+        _createCalendarHeader: function(mdate) {
+            mdate = moment(mdate).startOf('day');
 
-            hd.append($('<div class="col year-col" />').append(this._createYearSelect()))
-                .append($('<div class="col month-col" />').append(this._createMonthSelect()));
+            var self = this,
+
+                year = mdate.year(),
+                month = mdate.month(),
+
+                hd = $(
+                    '<div class="hd">' +
+                        '<div class="year">' + year + '</div>' +
+                        '<div class="month">' + (month + 1) + ' 月</div>' +
+                    '</div>'
+                ),
+
+                prevMonthButton = $('<button class="prev-month"></button>'),
+                nextMonthButton = $('<button class="next-month"></button>');
+
+            hd.append(prevMonthButton, nextMonthButton);
+
+            prevMonthButton.on('click.annebonny', function() {
+                self._picker.trigger('change.annebonny', ['month', mdate.subtract(1, 'months')]);
+            });
+
+            nextMonthButton.on('click.annebonny', function() {
+                self._picker.trigger('change.annebonny', ['month', mdate.add(1, 'months')]);
+            });
 
             return hd;
-        },
-
-        /**
-         * 创建年份选择器
-         */
-        _createYearSelect: function() {
-            var self = this,
-
-                nowYear = this._mdate.year(),
-                beginYear = nowYear - 20,
-                endYear = beginYear + 40,
-
-                selectHtml = '<select class="year">';
-
-            for (; beginYear <= endYear; beginYear++) {
-                selectHtml += '<option value="' + beginYear + '" ' + (beginYear === nowYear ? 'selected' : '') + '>' + beginYear + '</option>';
-            }
-
-            selectHtml += '</select>';
-
-            return $(selectHtml).on('change.annebonny', function() {
-                var val = parseInt($(this).val(), 10);
-                self._picker.trigger('change.annebonny', ['year', val]);
-            });
-        },
-
-        /**
-         * 创建月份选择器
-         */
-        _createMonthSelect: function() {
-            var self = this,
-
-                nowMonth = this._mdate.month(),
-                selectHtml = '<select class="month">';
-
-            for (var i = 0;  i < 12; i++) {
-                selectHtml += '<option value="' + i + '" ' + (i === nowMonth ? 'selected' : '') + '>' + (i + 1) + '</option>';
-            }
-
-            selectHtml += '</select>';
-
-            return $(selectHtml).on('change.annebonny', function() {
-                var val = parseInt($(this).val(), 10);
-                self._picker.trigger('change.annebonny', ['month', val]);
-            });
-        },
-
-        /**
-         * 获取所传入日期所在月份的月历中每天的 moment 对象
-         */
-        _getCalendarMdates: function(mdate) {
         },
 
         /**

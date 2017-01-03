@@ -1,10 +1,4 @@
-/*!
- * nojiko - 0.4.11
- * normalize.css - 3.0.2
- * @license: MIT  - https://github.com/BiosSun/nojiko/blob/master/LICENSE-MIT
- * @url: https://github.com/BiosSun/nojiko
- */
-.annebonny-container-calendar > .hd .col, .annebonny-calendar-page .col {
+.annebonny-calendar-page .col {
   float: left;
   width: 14.28571%;
   text-align: center;
@@ -15,59 +9,104 @@
 .annebonny-panel {
   max-height: 100%;
   position: fixed;
+  left: 0;
   right: 0;
   bottom: 0;
-  left: 0;
   z-index: 10002;
   background: #fff;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.35); }
 
 .annebonny-container-calendar > .hd {
-  *zoom: 1;
+  padding: 5px 0;
+  position: relative;
   background: #f0f0f0; }
-  .annebonny-container-calendar > .hd:before, .annebonny-container-calendar > .hd:after {
-    content: " ";
-    display: table; }
-  .annebonny-container-calendar > .hd:after {
-    clear: both; }
-  .annebonny-container-calendar > .hd .year-col select, .annebonny-container-calendar > .hd .month-col select {
-    -webkit-appearance: none;
+  .annebonny-container-calendar > .hd > .year, .annebonny-container-calendar > .hd > .month {
+    text-align: center; }
+  .annebonny-container-calendar > .hd > .year {
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px; }
+  .annebonny-container-calendar > .hd > .month {
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px; }
+  .annebonny-container-calendar > .hd > .prev-month, .annebonny-container-calendar > .hd > .next-month {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    padding: 0;
     border: 0;
-    width: 100%;
-    background: transparent;
-    line-height: 40px;
-    padding-left: 44%; }
-  .annebonny-container-calendar > .hd .year-col {
-    width: 57.14286%; }
-  .annebonny-container-calendar > .hd .month-col {
-    width: 42.85714%; }
+    background: transparent; }
+  .annebonny-container-calendar > .hd > .prev-month {
+    left: 0; }
+    .annebonny-container-calendar > .hd > .prev-month:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -5px;
+      margin-top: -10px;
+      border-right: 10px solid #777;
+      border-top: 10px dashed transparent;
+      border-bottom: 10px dashed transparent; }
+    .annebonny-container-calendar > .hd > .prev-month:after {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -3px;
+      margin-top: -8px;
+      border-right: 8px solid #f0f0f0;
+      border-top: 8px dashed transparent;
+      border-bottom: 8px dashed transparent; }
+  .annebonny-container-calendar > .hd > .next-month {
+    right: 0; }
+    .annebonny-container-calendar > .hd > .next-month:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -5px;
+      margin-top: -10px;
+      border-left: 10px solid #777;
+      border-top: 10px dashed transparent;
+      border-bottom: 10px dashed transparent; }
+    .annebonny-container-calendar > .hd > .next-month:after {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -5px;
+      margin-top: -8px;
+      border-left: 8px solid #f0f0f0;
+      border-top: 8px dashed transparent;
+      border-bottom: 8px dashed transparent; }
 
 .annebonny-calendar-page .line {
-  *zoom: 1; }
-  .annebonny-calendar-page .line:before, .annebonny-calendar-page .line:after {
-    content: " ";
-    display: table; }
-  .annebonny-calendar-page .line:after {
-    clear: both; }
+  /* @include clearfix; */ }
 .annebonny-calendar-page .day.prev-month, .annebonny-calendar-page .day.next-month {
   color: #d0d0d0; }
 .annebonny-calendar-page .day.now {
-  color: #428bca;
+  color: #ddd;
   font-weight: 700;
   text-decoration: underline; }
 .annebonny-calendar-page .day.selected {
-  background: #428bca;
+  background: #ddd;
   color: #fff; }
 .annebonny-calendar-page > .hd {
   background-color: #F7F7F7; }
 
 .annebonny-week-bar {
-  *zoom: 1; }
-  .annebonny-week-bar:before, .annebonny-week-bar:after {
-    content: " ";
-    display: table; }
-  .annebonny-week-bar:after {
-    clear: both; }
+  /* @include clearfix; */ }
 
 .annebonny-shade {
   position: fixed;
