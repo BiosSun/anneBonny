@@ -98,6 +98,10 @@ $annebonny-col-width: 14.2857143%;
             padding: 0;
             border: 0;
             background: transparent;
+
+            &:active, &.activated {
+                opacity: .6;
+            }
         }
 
         > .prev-month {

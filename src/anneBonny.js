@@ -245,8 +245,8 @@
                     '</div>'
                 ),
 
-                prevMonthButton = $('<button class="prev-month"></button>'),
-                nextMonthButton = $('<button class="next-month"></button>');
+                prevMonthButton = $('<button type="button" class="prev-month"></button>'),
+                nextMonthButton = $('<button type="button" class="next-month"></button>');
 
             hd.append(prevMonthButton, nextMonthButton);
 

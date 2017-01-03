@@ -42,6 +42,8 @@
     padding: 0;
     border: 0;
     background: transparent; }
+    .annebonny-container-calendar > .hd > .prev-month:active, .annebonny-container-calendar > .hd > .prev-month.activated, .annebonny-container-calendar > .hd > .next-month:active, .annebonny-container-calendar > .hd > .next-month.activated {
+      opacity: .6; }
   .annebonny-container-calendar > .hd > .prev-month {
     left: 0; }
     .annebonny-container-calendar > .hd > .prev-month:before {
