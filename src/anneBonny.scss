@@ -1,9 +1,42 @@
 @charset "utf-8";
 
-$primary-color: #ddd !default;
-$annebonny-col-width: 14.2857143% !default;
+/// 主色调
+$annebonny-primary-color: #428bca !default;
+
+/// 面板背景色
+$anneboony-background-color: #fff !default;
+
+/// 头部背景色
+$annebonny-header-background-color: #f0f0f0 !default;
+
+/// 星期栏背景色
+$annebonny-week-background-color: #f7f7f7 !default;
+
+/// 年份文字颜色
+$annebonny-year-color: #333 !default;
+
+/// 月份文字颜色
+$annebonny-month-color: #333 !default;
+
+/// 星期文字颜色
+$annebonny-week-color: #333 !default;
+
+/// 日期文字颜色
+$annebonny-day-color: #333 !default;
+
+/// 次要日期文字颜色，如非本月日期
+$annebonny-quiet-day-color: #d0d0d0 !default;
+
+/// 月份切换按钮颜色
+$annebonny-month-switcher-color: #777 !default;
+
+/// 面板 z-index
 $annebonny-panel-zindex: 10002 !default;
+
+/// 遮罩 z-index
 $annebonny-shade-zindex: 10001 !default;
+
+$annebonny-col-width: 14.2857143%;
 
 %annebonny-col {
     float: left;
@@ -24,8 +57,8 @@ $annebonny-shade-zindex: 10001 !default;
     bottom: 0;
     z-index: $annebonny-panel-zindex;
 
-    background: #fff;
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.35);
+    background: $anneboony-background-color;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .annebonny-container-calendar {
@@ -33,7 +66,7 @@ $annebonny-shade-zindex: 10001 !default;
         padding: 5px 0;
         position: relative;
 
-        background: #f0f0f0;
+        background: $annebonny-header-background-color;
 
         > .year, > .month {
             text-align: center;
@@ -43,12 +76,16 @@ $annebonny-shade-zindex: 10001 !default;
             height: 30px;
             line-height: 30px;
             font-size: 16px;
+
+            color: $annebonny-year-color;
         }
 
         > .month {
             height: 20px;
             line-height: 20px;
             font-size: 12px;
+
+            color: $annebonny-month-color;
         }
 
         > .prev-month, > .next-month {
@@ -78,7 +115,7 @@ $annebonny-shade-zindex: 10001 !default;
                 margin-left: -$size / 2;
                 margin-top: -$size;
 
-                border-right: $size solid #777;
+                border-right: $size solid $annebonny-month-switcher-color;
                 border-top: $size dashed transparent;
                 border-bottom: $size dashed transparent;
             }
@@ -96,7 +133,7 @@ $annebonny-shade-zindex: 10001 !default;
                 margin-left: -$size / 2 + 1px;
                 margin-top: -$size;
 
-                border-right: $size solid #f0f0f0;
+                border-right: $size solid $annebonny-header-background-color;
                 border-top: $size dashed transparent;
                 border-bottom: $size dashed transparent;
             }
@@ -118,7 +155,7 @@ $annebonny-shade-zindex: 10001 !default;
                 margin-left: -$size / 2;
                 margin-top: -$size;
 
-                border-left: $size solid #777;
+                border-left: $size solid $annebonny-month-switcher-color;
                 border-top: $size dashed transparent;
                 border-bottom: $size dashed transparent;
             }
@@ -136,7 +173,7 @@ $annebonny-shade-zindex: 10001 !default;
                 margin-left: -$size / 2 - 1px;
                 margin-top: -$size;
 
-                border-left: $size solid #f0f0f0;
+                border-left: $size solid $annebonny-header-background-color;
                 border-top: $size dashed transparent;
                 border-bottom: $size dashed transparent;
             }
@@ -146,7 +183,14 @@ $annebonny-shade-zindex: 10001 !default;
 
 .annebonny-calendar-page {
     .line {
-        /* @include clearfix; */
+        &:before, &:after {
+            content: ' ';
+            display: table;
+        }
+
+        &:after {
+            clear: both;
+        }
     }
 
     .col {
@@ -154,30 +198,33 @@ $annebonny-shade-zindex: 10001 !default;
     }
 
     .day {
+        color: $annebonny-day-color;
+
         &.prev-month,
         &.next-month {
-            color: #d0d0d0;
+            color: $annebonny-quiet-day-color;
         }
 
         &.now {
-            color: $primary-color;
+            color: $annebonny-primary-color;
             font-weight: 700;
             text-decoration: underline;
         }
 
         &.selected {
-            background: $primary-color;
+            background: $annebonny-primary-color;
             color: #fff;
+            font-weight: 700;
         }
     }
 
-    > .hd {
-        background-color: #F7F7F7;
+    .week {
+        color: $annebonny-week-color;
     }
-}
 
-.annebonny-week-bar {
-    /* @include clearfix; */
+    > .hd {
+        background-color: $annebonny-week-background-color;
+    }
 }
 
 .annebonny-shade {

@@ -328,11 +328,11 @@
          * 创建星期条
          */
         _createWeekBar: function() {
-            var weekBar = '<div class="' + CLASS_NAME + '-week-bar">',
+            var weekBar = '<div class="line">',
                 weekName = moment._locale._weekdaysMin;
 
             for (var i = 0; i < weekName.length; i++) {
-                weekBar += '<span class="col">' + weekName[i] + '</span>';
+                weekBar += '<span class="col week">' + weekName[i] + '</span>';
             }
 
             weekBar += '</div>';
